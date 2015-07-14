@@ -16,8 +16,8 @@ describe('angular-clipboard', function () {
         spyOn(scope, 'fail')
     }));
 
-    it('should succeed on click', function () {
+    it('should fail on click in Firefox', function () {
         elm.triggerHandler('click');
-        expect(scope.success).toHaveBeenCalled();
+        expect(scope.fail).toHaveBeenCalled();
     });
 });
