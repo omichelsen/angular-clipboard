@@ -1,5 +1,5 @@
 angular.module('angular-clipboard', [])
-    .directive('clipboard', ['$window', '$document', function ($window, $document) {
+    .directive('clipboard', ['$document', function ($document) {
         return {
             restrict: 'A',
             scope: {
@@ -17,7 +17,7 @@ angular.module('angular-clipboard', [])
                 }
 
                 function copyNode(node) {
-                    var selection = $window.getSelection();
+                    var selection = $document[0].getSelection();
                     selection.removeAllRanges();
 
                     var range = $document[0].createRange();
