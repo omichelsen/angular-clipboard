@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="demoApp" ng-controller="DemoCtrl">
+    <head>
+        <meta charset="utf-8">
+        <title>angular-clipboard demo</title>
+    </head>
+    <body>
+
+        <h1>Click button to copy text to clipboard</h1>
+
+        <p>
+            <input type="text" ng-model="textToCopy">
+            <button clipboard text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</button>
+        </p>
+
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+        <script src="../angular-clipboard.js"></script>
+        <script>
+            var demoApp = angular.module('demoApp', ['angular-clipboard']);
+
+            demoApp.controller('DemoCtrl', ['$scope', function ($scope) {
+                $scope.textToCopy = 'I can copy by clicking!';
+
+                $scope.success = function () {
+                    console.log('Copied!');
+                };
+
+                $scope.fail = function (err) {
+                    console.error('Error!', err);
+                };
+            }]);
+        </script>
+    </body>
+</html>
