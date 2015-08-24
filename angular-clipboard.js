@@ -17,6 +17,9 @@ angular.module('angular-clipboard', [])
                 }
 
                 function copyNode(node) {
+                    // Set inline style to override css styles
+                    $document[0].body.style.webkitUserSelect = 'initial';
+
                     var selection = $document[0].getSelection();
                     selection.removeAllRanges();
 
@@ -26,6 +29,9 @@ angular.module('angular-clipboard', [])
 
                     $document[0].execCommand('copy');
                     selection.removeAllRanges();
+
+                    // Reset inline style
+                    $document[0].body.style.webkitUserSelect = '';
                 }
 
                 function copyText(text) {
