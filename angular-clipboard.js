@@ -9,7 +9,7 @@ angular.module('angular-clipboard', [])
             },
             link: function (scope, element) {
                 function createNode(text) {
-                    var node = $document[0].createElement('span');
+                    var node = $document[0].createElement('textarea');
                     node.style.position = 'absolute';
                     node.style.left = '-10000px';
                     node.textContent = text;
@@ -22,10 +22,7 @@ angular.module('angular-clipboard', [])
 
                     var selection = $document[0].getSelection();
                     selection.removeAllRanges();
-
-                    var range = $document[0].createRange();
-                    range.selectNodeContents(node);
-                    selection.addRange(range);
+                    node.select();
 
                     $document[0].execCommand('copy');
                     selection.removeAllRanges();
