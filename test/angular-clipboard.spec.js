@@ -16,7 +16,13 @@ describe('angular-clipboard', function () {
         spyOn(scope, 'fail');
     }));
 
-    it('should fail on click in Firefox', function () {
+    it('should invoke success callback', function () {
+        elm.triggerHandler('click');
+        expect(scope.success).toHaveBeenCalled();
+    });
+
+    it('should invoke fail callback', function () {
+        spyOn(document.body, 'appendChild').and.throwError('fake');
         elm.triggerHandler('click');
         expect(scope.fail).toHaveBeenCalled();
     });
