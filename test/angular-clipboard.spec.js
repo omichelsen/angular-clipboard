@@ -17,12 +17,19 @@ describe('angular-clipboard', function () {
     }));
 
     it('should invoke success callback', function () {
+        spyOn(document, 'execCommand').and.returnValue(true);
         elm.triggerHandler('click');
         expect(scope.success).toHaveBeenCalled();
     });
 
     it('should invoke fail callback', function () {
         spyOn(document.body, 'appendChild').and.throwError('fake');
+        elm.triggerHandler('click');
+        expect(scope.fail).toHaveBeenCalled();
+    });
+
+    it('should invoke fail callback', function () {
+        spyOn(document, 'execCommand').and.returnValue(false);
         elm.triggerHandler('click');
         expect(scope.fail).toHaveBeenCalled();
     });

@@ -24,7 +24,9 @@ angular.module('angular-clipboard', [])
                     selection.removeAllRanges();
                     node.select();
 
-                    $document[0].execCommand('copy');
+                    if(!$document[0].execCommand('copy')) {
+                      throw('failure copy');
+                    }
                     selection.removeAllRanges();
 
                     // Reset inline style
