@@ -8,7 +8,8 @@ describe('angular-clipboard', function () {
         elm = $compile('<button clipboard text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</button>')(scope);
 
         scope.textToCopy = 'Copy me!';
-        scope.success = function () {};
+        scope.copied = false;
+        scope.success = function () {scope.copied = true;};
         scope.fail = function (err) {};
         scope.$digest();
 
@@ -32,5 +33,10 @@ describe('angular-clipboard', function () {
         spyOn(document, 'execCommand').and.returnValue(false);
         elm.triggerHandler('click');
         expect(scope.fail).toHaveBeenCalled();
+    });
+    
+    it('should be caught by angular\'s digest cycle', function () {
+        elm.triggerHandler('click');
+        expect(scope.copied).toEqual(true);
     });
 });
