@@ -13,7 +13,7 @@ describe('angular-clipboard', function () {
         scope.fail = function (err) {};
         scope.$digest();
 
-        spyOn(scope, 'success');
+        spyOn(scope, 'success').and.callThrough();
         spyOn(scope, 'fail');
     }));
 
@@ -37,7 +37,6 @@ describe('angular-clipboard', function () {
     
     it('should be caught by angular\'s digest cycle', function () {
         spyOn(document, 'execCommand').and.returnValue(true);
-        spyOn(scope, 'success').and.callThrough();
         elm.triggerHandler('click');
         expect(scope.copied).toEqual(true);
     });
