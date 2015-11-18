@@ -43,12 +43,12 @@ angular.module('angular-clipboard', [])
                 element.on('click', function (event) {
                     try {
                         copyText(scope.text);
-                        if (scope.onCopied) {
-                            scope.onCopied();
+                        if (angular.isFunction(scope.onCopied)) {
+                            scope.$evalAsync(scope.onCopied());
                         }
                     } catch (err) {
-                        if (scope.onError) {
-                            scope.onError({err: err});
+                        if (angular.isFunction(scope.onError)) {
+                            scope.$evalAsync(scope.onError({err: err}));
                         }
                     }
                 });
