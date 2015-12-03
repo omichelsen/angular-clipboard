@@ -10,6 +10,7 @@ module.exports = function(config) {
     files: [
       'http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js',
       'http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-mocks.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js',
       'angular-clipboard.js',
       'test/*.js'
     ],

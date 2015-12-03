@@ -7,7 +7,7 @@ angular.module('angular-clipboard', [])
                 onError: '&',
                 text: '='
             },
-            link: function (scope, element) {
+            link: function (scope, element, attrs) {
                 function createNode(text) {
                     var node = $document[0].createElement('textarea');
                     node.style.position = 'absolute';
@@ -24,8 +24,8 @@ angular.module('angular-clipboard', [])
                     selection.removeAllRanges();
                     node.select();
 
-                    if(!$document[0].execCommand('copy')) {
-                      throw('failure copy');
+                    if (!$document[0].execCommand('copy')) {
+                        throw ('failure copy');
                     }
                     selection.removeAllRanges();
 
@@ -40,7 +40,7 @@ angular.module('angular-clipboard', [])
                     $document[0].body.removeChild(node);
                 }
 
-                element.on('click', function (event) {
+                function startCopy() {
                     try {
                         copyText(scope.text);
                         if (angular.isFunction(scope.onCopied)) {
@@ -48,10 +48,54 @@ angular.module('angular-clipboard', [])
                         }
                     } catch (err) {
                         if (angular.isFunction(scope.onError)) {
-                            scope.$evalAsync(scope.onError({err: err}));
+                            scope.$evalAsync(scope.onError({ err: err }));
                         }
                     }
-                });
+                }
+
+                function setupClick() {
+                    element.on('click', function (event) {
+                        startCopy();
+                    });
+                }
+
+                function setupCtrlC() {
+                    var ctrlDown = false;
+                    var ctrlKey = 17;
+                    var cKey = 67;
+
+                    // This is necessary to allow event focus on the element
+                    element.attr('tabindex', "0");
+
+                    element.bind("keydown", function ($event) {
+                        if (ctrlDown && ($event.keyCode == cKey)) {
+                            startCopy();
+                            console.log("c event")
+                        }
+                    });
+
+                    // Listen for key up on the window, in case someone presses ctrlDown
+                    // then clicks on 
+                    angular.element($document).bind("keyup", function ($event) {
+                        if ($event.keyCode == ctrlKey) {
+                            ctrlDown = false;
+                        }
+                    });
+
+                    element.bind("keydown", function ($event) {
+                        if ($event.keyCode == ctrlKey) {
+                            ctrlDown = true;
+                            console.log("ctrl down");
+                        }
+                    });
+                }
+
+                // add event listeners
+                if ("ctrlC" in attrs) {
+                    setupCtrlC();
+                } else {
+                    setupClick();
+                }
             }
         };
     }]);
