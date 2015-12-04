@@ -13,9 +13,9 @@
             <button clipboard text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</button>
         </div>
 
-        <h1>Click the box below then Press ctrl-c to copy</h1>
         <div style="padding: 100px; background: red;"
              clipboard ctrl-c text="moreTextToCopy" on-copied="success()" on-error="fail(err)">
+                <h1>Selecting text blocks clipboard. If you click on the element and press ctrl c it will copy "CTRL C!"</h1>
         </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.js"></script>
@@ -26,7 +26,7 @@
             demoApp.controller('DemoCtrl', ['$scope', function ($scope) {
                 $scope.textToCopy = "I can copy by clicking!\nAnd also new lines!";
 
-                $scope.moreTextToCopy = "You just copied with Ctrl C!";
+                $scope.moreTextToCopy = "Ctrl C!";
 
                 $scope.success = function () {
                     console.log('Copied!');

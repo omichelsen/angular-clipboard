@@ -19,7 +19,6 @@ describe('angular-clipboard', function () {
     }));
 
     it('should invoke success callback', function () {
-        console.log(scope)
         spyOn(document, 'execCommand').and.returnValue(true);
         elm.triggerHandler('click');
         expect(scope.success).toHaveBeenCalled();
@@ -59,12 +58,11 @@ describe('angular-clipboard', function () {
             $(elm).trigger(ctrlDownEvent);
             $(elm).trigger(cDownEvent);
 
-            console.log(elm)
             expect(scope.success).not.toHaveBeenCalled();
         });
 
         it("should not copy if ctrl + c is pressed without the attribute ctrl-c attribute", function () {
-            elm = compile('<button clipboard ctrl-c text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</button>')(scope);
+            elm = compile('<div clipboard ctrl-c text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</div>')(scope);
             scope.$digest();
 
             $(elm).trigger(ctrlDownEvent);

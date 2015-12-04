@@ -1,5 +1,5 @@
 angular.module('angular-clipboard', [])
-    .directive('clipboard', ['$document', function ($document) {
+    .directive('clipboard', ['$document', '$window', function ($document, $window) {
         return {
             restrict: 'A',
             scope: {
@@ -64,18 +64,31 @@ angular.module('angular-clipboard', [])
                     var ctrlKey = 17;
                     var cKey = 67;
 
+                    // returns true if there is selected text, false otherwise
+                    // see http://stackoverflow.com/a/5379408 for more info
+                    function selectedText() {
+                        var text = "";
+                        if ($window.getSelection) {
+                            text = $window.getSelection().toString();
+                        } else if ($document.selection && $document.selection.type != "Control") {
+                            text = $document.selection.createRange().text;
+                        }
+                        return text;
+                    }
+
                     // This is necessary to allow event focus on the element
                     element.attr('tabindex', "0");
 
                     element.bind("keydown", function ($event) {
                         if (ctrlDown && ($event.keyCode == cKey)) {
-                            startCopy();
-                            console.log("c event")
+                            if (!selectedText()) {
+                                startCopy();
+                            }
                         }
                     });
 
-                    // Listen for key up on the window, in case someone presses ctrlDown
-                    // then clicks on 
+                    // Listen for key up on the window instead of the element, 
+                    // in case someone presses ctrlDown then clicks on another element
                     angular.element($document).bind("keyup", function ($event) {
                         if ($event.keyCode == ctrlKey) {
                             ctrlDown = false;
@@ -85,7 +98,7 @@ angular.module('angular-clipboard', [])
                     element.bind("keydown", function ($event) {
                         if ($event.keyCode == ctrlKey) {
                             ctrlDown = true;
-                            console.log("ctrl down");
+                            //console.log("ctrl down");
                         }
                     });
                 }
