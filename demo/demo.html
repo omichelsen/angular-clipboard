@@ -1,17 +1,22 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html ng-app="demoApp" ng-controller="DemoCtrl">
     <head>
         <meta charset="utf-8">
         <title>angular-clipboard demo</title>
     </head>
-    <body>
+    <body style="text-align: center">
 
         <h1>Click button to copy text to clipboard</h1>
 
-        <p>
+        <div>
             <textarea ng-model="textToCopy" rows="5" cols="30"></textarea><br />
             <button clipboard text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</button>
-        </p>
+        </div>
+
+        <div style="padding: 100px; background: red;"
+             clipboard ctrl-c text="moreTextToCopy" on-copied="success()" on-error="fail(err)">
+                <h1>Selecting text blocks clipboard. If you click on the element and press ctrl c it will copy "CTRL C!"</h1>
+        </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.js"></script>
         <script src="../angular-clipboard.js"></script>
@@ -20,6 +25,8 @@
 
             demoApp.controller('DemoCtrl', ['$scope', function ($scope) {
                 $scope.textToCopy = "I can copy by clicking!\nAnd also new lines!";
+
+                $scope.moreTextToCopy = "Ctrl C!";
 
                 $scope.success = function () {
                     console.log('Copied!');
@@ -30,5 +37,5 @@
                 };
             }]);
         </script>
-    </body>
+</body>
 </html>

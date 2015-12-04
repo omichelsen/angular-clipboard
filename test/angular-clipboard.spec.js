@@ -1,16 +1,17 @@
 describe('angular-clipboard', function () {
-    var elm, scope;
+    var elm, scope, compile;
 
     beforeEach(angular.mock.module('angular-clipboard'));
 
-    beforeEach(angular.mock.inject(function ($rootScope, $compile) {
+    beforeEach(inject(function ($rootScope, $compile) {
         scope = $rootScope;
-        elm = $compile('<button clipboard text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</button>')(scope);
+        compile = $compile;
+        elm = compile('<button clipboard text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</button>')(scope);
 
         scope.textToCopy = 'Copy me!';
         scope.copied = false;
-        scope.success = function () {scope.copied = true;};
-        scope.fail = function (err) {};
+        scope.success = function () { scope.copied = true; };
+        scope.fail = function (err) { };
         scope.$digest();
 
         spyOn(scope, 'success').and.callThrough();
@@ -34,10 +35,39 @@ describe('angular-clipboard', function () {
         elm.triggerHandler('click');
         expect(scope.fail).toHaveBeenCalled();
     });
-    
+
     it('should be caught by angular\'s digest cycle', function () {
         spyOn(document, 'execCommand').and.returnValue(true);
         elm.triggerHandler('click');
         expect(scope.copied).toEqual(true);
     });
+
+    describe('Ctrl C', function () {
+        var ctrlDownEvent, cDownEvent;
+        beforeEach(function () {
+            ctrlDownEvent = $.Event('keydown');
+            ctrlDownEvent.which = 17;
+            ctrlDownEvent.keyCode = 17;
+
+            cDownEvent = $.Event('keydown');
+            cDownEvent.which = 67;
+            cDownEvent.keyCode = 67;
+        });
+
+        it("should not copy if ctrl + c is pressed without the attribute ctrl-c attribute", function () {
+            $(elm).trigger(ctrlDownEvent);
+            $(elm).trigger(cDownEvent);
+
+            expect(scope.success).not.toHaveBeenCalled();
+        });
+
+        it("should not copy if ctrl + c is pressed without the attribute ctrl-c attribute", function () {
+            elm = compile('<div clipboard ctrl-c text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</div>')(scope);
+            scope.$digest();
+
+            $(elm).trigger(ctrlDownEvent);
+            $(elm).trigger(cDownEvent);
+
+        });
+    })
 });
