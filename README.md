@@ -51,6 +51,19 @@ Copy text from an input field by clicking a button:
 
 You can supply a method to be called for the `on-copied` and `on-error` event. The `on-error` function will be called with the error object as argument `err`.
 
+### Use as service
+
+You can also invoke the copy to clipboard action directly by injecting the `clipboard` service. Just remember it has to be in a click event, as clipboard access requires user action.
+
+```javascript
+angular.module('MyApp', ['angular-clipboard'])
+    .controller('MyController', ['$scope', 'clipboard', function ($scope, clipboard) {
+        $scope.clickHandler = function () {
+            clipboard.copyText('Copy this text');
+        };
+    }]);
+```
+
 [travis-image]: https://img.shields.io/travis/omichelsen/angular-clipboard/master.svg
 [travis-url]: https://travis-ci.org/omichelsen/angular-clipboard
 [coveralls-image]: https://img.shields.io/coveralls/omichelsen/angular-clipboard/master.svg
