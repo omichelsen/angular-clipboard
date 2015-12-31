@@ -10,19 +10,21 @@ angular.module('angular-clipboard', [])
 
         function copyNode(node) {
             // Set inline style to override css styles
-            $document[0].body.style.webkitUserSelect = 'initial';
+            try {
+                $document[0].body.style.webkitUserSelect = 'initial';
 
-            var selection = $document[0].getSelection();
-            selection.removeAllRanges();
-            node.select();
+                var selection = $document[0].getSelection();
+                selection.removeAllRanges();
+                node.select();
 
-            if(!$document[0].execCommand('copy')) {
-              throw('failure copy');
+                if(!$document[0].execCommand('copy')) {
+                    throw('failure copy');
+                }
+                selection.removeAllRanges();
+            } finally {
+                // Reset inline style
+                $document[0].body.style.webkitUserSelect = '';
             }
-            selection.removeAllRanges();
-
-            // Reset inline style
-            $document[0].body.style.webkitUserSelect = '';
         }
 
         function copyText(text) {
