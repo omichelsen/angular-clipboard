@@ -9,8 +9,8 @@ angular.module('angular-clipboard', [])
         }
 
         function copyNode(node) {
-            // Set inline style to override css styles
             try {
+                // Set inline style to override css styles
                 $document[0].body.style.webkitUserSelect = 'initial';
 
                 var selection = $document[0].getSelection();
