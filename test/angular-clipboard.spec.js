@@ -17,24 +17,24 @@ describe('angular-clipboard', function () {
         spyOn(scope, 'fail');
     }));
 
-    it('should invoke success callback', function () {
+    it('should invoke success callback after successful execCommand', function () {
         spyOn(document, 'execCommand').and.returnValue(true);
         elm.triggerHandler('click');
         expect(scope.success).toHaveBeenCalled();
     });
 
-    it('should invoke fail callback', function () {
+    it('should invoke fail callback on error in execCommand', function () {
+        spyOn(document, 'execCommand').and.returnValue(false);
+        elm.triggerHandler('click');
+        expect(scope.fail).toHaveBeenCalledWith('failure copy');
+    });
+
+    it('should invoke fail callback on invalid child element', function () {
         spyOn(document.body, 'appendChild').and.throwError('fake');
         elm.triggerHandler('click');
         expect(scope.fail).toHaveBeenCalled();
     });
 
-    it('should invoke fail callback', function () {
-        spyOn(document, 'execCommand').and.returnValue(false);
-        elm.triggerHandler('click');
-        expect(scope.fail).toHaveBeenCalled();
-    });
-    
     it('should be caught by angular\'s digest cycle', function () {
         spyOn(document, 'execCommand').and.returnValue(true);
         elm.triggerHandler('click');
