@@ -1,4 +1,4 @@
-module.exports = angular.module('angular-clipboard', [])
+var angularModule = angular.module('angular-clipboard', [])
     .factory('clipboard', ['$document', function ($document) {
         function createNode(text) {
             var node = $document[0].createElement('textarea');
@@ -62,3 +62,7 @@ module.exports = angular.module('angular-clipboard', [])
             }
         };
     }]);
+
+if (typeof module !== "undefined" && typeof exports !== "undefined" && module.exports === exports) {
+	module.exports = angularModule;
+}
