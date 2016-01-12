@@ -40,4 +40,9 @@ describe('angular-clipboard', function () {
         elm.triggerHandler('click');
         expect(scope.copied).toEqual(true);
     });
+
+    it('should export/return angular module', function () {
+        expect(window.angularClipboard).toBeDefined();
+        expect(window.angularClipboard.name).toEqual('angular-clipboard');
+    });
 });

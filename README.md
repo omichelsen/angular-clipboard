@@ -64,6 +64,16 @@ angular.module('MyApp', ['angular-clipboard'])
     }]);
 ```
 
+### Use with a module loader
+
+If you are using a module loader, you can import the module name when requiring it in angular. Works with any AMD/UMD/CommonJS module loader.
+
+```javascript
+import clipboardModule from 'angular-clipboard';
+
+angular.module('mymodule', [clipboardModule.name]);
+```
+
 [travis-image]: https://img.shields.io/travis/omichelsen/angular-clipboard/master.svg
 [travis-url]: https://travis-ci.org/omichelsen/angular-clipboard
 [coveralls-image]: https://img.shields.io/coveralls/omichelsen/angular-clipboard/master.svg
