@@ -5,8 +5,9 @@ describe('angular-clipboard', function () {
 
     beforeEach(angular.mock.inject(function ($rootScope, $compile) {
         scope = $rootScope;
-        elm = $compile('<button clipboard text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</button>')(scope);
+        elm = $compile('<button clipboard supported="supported" text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</button>')(scope);
 
+        scope.supported = undefined;
         scope.textToCopy = 'Copy me!';
         scope.copied = false;
         scope.success = function () {scope.copied = true;};
@@ -44,5 +45,9 @@ describe('angular-clipboard', function () {
     it('should export/return angular module', function () {
         expect(window.angularClipboard).toBeDefined();
         expect(window.angularClipboard.name).toEqual('angular-clipboard');
+    });
+
+    it('should feature detect and set supported', function () {
+        expect(scope.supported).toEqual(true);
     });
 });

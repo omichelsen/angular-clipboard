@@ -10,7 +10,11 @@
 
         <p>
             <textarea ng-model="textToCopy" rows="5" cols="30"></textarea><br />
-            <button clipboard text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</button>
+            <button clipboard supported="supported" text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</button>
+        </p>
+
+        <p>
+            Supported: <span ng-bind="supported"></span>
         </p>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.js"></script>
@@ -19,6 +23,8 @@
             var demoApp = angular.module('demoApp', ['angular-clipboard']);
 
             demoApp.controller('DemoCtrl', ['$scope', function ($scope) {
+                $scope.supported = false;
+
                 $scope.textToCopy = "I can copy by clicking!\nAnd also new lines!";
 
                 $scope.success = function () {

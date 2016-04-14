@@ -30,6 +30,8 @@ Require angular-clipboard as a dependency for your app:
 ```javascript
 angular.module('MyApp', ['angular-clipboard'])
     .controller('MyController', ['$scope', function ($scope) {
+        $scope.supported = false;
+
         $scope.textToCopy = 'I can copy by clicking!';
 
         $scope.success = function () {
@@ -46,10 +48,12 @@ Copy text from an input field by clicking a button:
 
 ```html
 <input type="text" ng-model="textToCopy">
-<button clipboard text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</button>
+<button clipboard supported="supported" text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</button>
 ```
 
 You can supply a method to be called for the `on-copied` and `on-error` event. The `on-error` function will be called with the error object as argument `err`.
+
+The optional `supported` property can be used to detect browser support for the clipboard feature.
 
 ### Use as service
 
@@ -58,6 +62,10 @@ You can also invoke the copy to clipboard action directly by injecting the `clip
 ```javascript
 angular.module('MyApp', ['angular-clipboard'])
     .controller('MyController', ['$scope', 'clipboard', function ($scope, clipboard) {
+        if (!clipboard.supported) {
+            console.log('Sorry, copy to clipboard is not supported');
+        }
+
         $scope.clickHandler = function () {
             clipboard.copyText('Copy this text');
         };
