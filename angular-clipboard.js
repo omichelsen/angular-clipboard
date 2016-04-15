@@ -46,7 +46,8 @@ return angular.module('angular-clipboard', [])
         }
 
         return {
-            copyText: copyText
+            copyText: copyText,
+            supported: 'queryCommandSupported' in document && document.queryCommandSupported('copy')
         };
     }])
     .directive('clipboard', ['clipboard', function (clipboard) {
@@ -55,9 +56,12 @@ return angular.module('angular-clipboard', [])
             scope: {
                 onCopied: '&',
                 onError: '&',
-                text: '='
+                text: '=',
+                supported: '='
             },
             link: function (scope, element) {
+                scope.supported = clipboard.supported;
+
                 element.on('click', function (event) {
                     try {
                         clipboard.copyText(scope.text);
