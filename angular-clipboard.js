@@ -57,7 +57,7 @@ return angular.module('angular-clipboard', [])
                 onCopied: '&',
                 onError: '&',
                 text: '=',
-                supported: '='
+                supported: '=?'
             },
             link: function (scope, element) {
                 scope.supported = clipboard.supported;
