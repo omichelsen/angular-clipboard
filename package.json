@@ -28,5 +28,12 @@
     "karma-coverage": "~0.5.2",
     "karma-firefox-launcher": "~0.1.6",
     "karma-jasmine": "~0.3.6"
+  },
+  "jspm": {
+    "main": "angular-clipboard",
+    "format": "cjs",
+    "dependencies": {
+      "angular": "^1.4.0"
+    }
   }
 }
