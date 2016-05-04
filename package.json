@@ -27,6 +27,6 @@
     "karma": "~0.13.19",
     "karma-coverage": "~0.5.2",
     "karma-firefox-launcher": "~0.1.6",
-    "karma-jasmine": "~0.3.6"
+    "karma-jasmine": "~1.0.2"
   }
 }
