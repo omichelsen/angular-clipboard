@@ -6,6 +6,7 @@
     "dependencies": {
         "angular": "*"
     },
+    "license": "MIT",
     "ignore": [
         "demo",
         "test",
