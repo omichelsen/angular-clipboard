@@ -10,15 +10,13 @@
 }(this, function (angular) {
 
 return angular.module('angular-clipboard', [])
-    .factory('clipboard', ['$document', function ($document) {
+    .factory('clipboard', ['$document', '$window', function ($document, $window) {
         function createNode(text, context) {
             var node = $document[0].createElement('textarea');
             node.style.position = 'absolute';
             node.textContent = text;
             node.style.left = '-10000px';
-            if (context instanceof HTMLElement) {
-                node.style.top = context.getBoundingClientRect().top + 'px';
-            }
+            node.style.top = ($window.pageYOffset || $document[0].documentElement.scrollTop) + 'px';
             return node;
         }
 
