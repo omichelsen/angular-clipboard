@@ -48,7 +48,7 @@ return angular.module('angular-clipboard', [])
 
         return {
             copyText: copyText,
-            supported: 'queryCommandSupported' in document && document.queryCommandSupported('copy')
+            supported: 'queryCommandSupported' in $document[0] && $document[0].queryCommandSupported('copy')
         };
     }])
     .directive('clipboard', ['clipboard', function (clipboard) {
