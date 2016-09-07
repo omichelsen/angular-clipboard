@@ -65,7 +65,11 @@ return angular.module('angular-clipboard', [])
 
                 element.on('click', function (event) {
                     try {
-                        clipboard.copyText(scope.text, element[0]);
+                        if (scope.fn) {
+                            clipboard.copyText(scope.fn(), element[0]);
+                        }else{
+                            clipboard.copyText(scope.text, element[0]);
+                        }
                         if (angular.isFunction(scope.onCopied)) {
                             scope.$evalAsync(scope.onCopied());
                         }
