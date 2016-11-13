@@ -22,6 +22,14 @@
         <script>
             var demoApp = angular.module('demoApp', ['angular-clipboard']);
 
+            demoApp.config(function(angularClipboardProvider) {
+                angularClipboardProvider.configure({
+                    onCopiedDefaultCallback: function(){
+                        console.log("Copied like a pro!");
+                    }
+                })
+            });
+
             demoApp.controller('DemoCtrl', ['$scope', function ($scope) {
                 $scope.supported = false;
 

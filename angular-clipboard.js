@@ -10,6 +10,23 @@
 }(this, function (angular) {
 
 return angular.module('angular-clipboard', [])
+    .provider('angularClipboardProvider', function () {
+        this.options = {
+            onCopiedDefaultCallback: false,
+            onErrorDefaultCallback: false
+        };
+        this.configure = function (options) {
+            angular.extend(this.options, options);
+        };
+        this.$get = function() {
+            /*return {
+                defaultOnCopied: this.options.onCopiedDefaultCallback,
+                defaultOnError: this.options.onErrorDefaultCallback,
+            };*/
+            return this;
+        };
+        //return this;
+    })
     .factory('clipboard', ['$document', '$window', function ($document, $window) {
         function createNode(text, context) {
             var node = $document[0].createElement('textarea');
@@ -51,7 +68,7 @@ return angular.module('angular-clipboard', [])
             supported: 'queryCommandSupported' in $document[0] && $document[0].queryCommandSupported('copy')
         };
     }])
-    .directive('clipboard', ['clipboard', function (clipboard) {
+    .directive('clipboard', ['clipboard', 'angularClipboardProvider', function (clipboard, angularClipboardProvider) {
         return {
             restrict: 'A',
             scope: {
@@ -62,6 +79,10 @@ return angular.module('angular-clipboard', [])
             },
             link: function (scope, element) {
                 scope.supported = clipboard.supported;
+
+                if (!angular.isFunction(scope.onCopied) && angular.isFunction(angularClipboardProvider.defaultOnCopied)) {
+                    scope.onCopied = angularClipboardProvider.defaultOnCopied;
+                }
 
                 element.on('click', function (event) {
                     try {
