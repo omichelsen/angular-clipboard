@@ -23,7 +23,6 @@ return angular.module('angular-clipboard', [])
                 defaultOnCopied: this.options.onCopiedDefaultCallback,
                 defaultOnError: this.options.onErrorDefaultCallback,
             };
-            return this;
         };
         return this;
     })
