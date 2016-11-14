@@ -24,8 +24,9 @@
 
             demoApp.config([ "angularClipboardProvider", function(angularClipboardProvider) {
                 angularClipboardProvider.configure({
-                    onCopiedDefaultCallback: function(){
-                        console.log("Copied like a pro!");
+                    onCopiedDefaultCallback: function(copiedText, $injector){
+                        var $log = $injector.get("$log");
+                        $log.info("Text copied, and callback was injected with the $log service");
                     }
                 })
             }]);

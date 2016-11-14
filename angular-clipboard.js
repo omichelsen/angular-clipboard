@@ -67,7 +67,7 @@ return angular.module('angular-clipboard', [])
             supported: 'queryCommandSupported' in $document[0] && $document[0].queryCommandSupported('copy')
         };
     }])
-    .directive('clipboard', ['clipboard', 'angularClipboard', function (clipboard, angularClipboardProvider) {
+    .directive('clipboard', ['clipboard', 'angularClipboard', "$injector", function (clipboard, angularClipboardProvider, $injector) {
         return {
             restrict: 'A',
             scope: {
@@ -97,11 +97,11 @@ return angular.module('angular-clipboard', [])
                     try {
                         clipboard.copyText(scope.text, element[0]);
                         if (onCopiedCallback) {
-                            scope.$evalAsync(onCopiedCallback());
+                            scope.$evalAsync(onCopiedCallback(scope.text, $injector));
                         }
                     } catch (err) {
                         if (onErrorCallback) {
-                            scope.$evalAsync(onErrorCallback(err));
+                            scope.$evalAsync(onErrorCallback(err, $injector));
                         }
                     }
                 });
