@@ -85,6 +85,7 @@ return angular.module('angular-clipboard', [])
                 } else if (angular.isFunction(angularClipboardProvider.defaultOnCopied)) {
                     onCopiedCallback = angularClipboardProvider.defaultOnCopied;
                 }
+                scope.onCopiedCallback = onCopiedCallback;
 
                 var onErrorCallback = false;
                 if (angular.isFunction(scope.onError)) {
@@ -92,16 +93,17 @@ return angular.module('angular-clipboard', [])
                 } else if (angular.isFunction(angularClipboardProvider.defaultOnError)) {
                     onErrorCallback = angularClipboardProvider.defaultOnError;
                 }
+                scope.onErrorCallback = onErrorCallback;
 
                 element.on('click', function (event) {
                     try {
                         clipboard.copyText(scope.text, element[0]);
-                        if (onCopiedCallback) {
-                            scope.$evalAsync(onCopiedCallback(scope.text, $injector));
+                        if (scope.onCopiedCallback) {
+                            scope.$evalAsync(scope.onCopiedCallback(), {text: scope.text, injector: $injector});
                         }
                     } catch (err) {
-                        if (onErrorCallback) {
-                            scope.$evalAsync(onErrorCallback(err, $injector));
+                        if (scope.onErrorCallback) {
+                            scope.$evalAsync(scope.onErrorCallback({err: err}));
                         }
                     }
                 });
