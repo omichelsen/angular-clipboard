@@ -66,55 +66,65 @@ describe('with provider', function() {
         angular.extend(this.options, options);
     };
     */
-    beforeEach(module('angular-clipboard', function (angularClipboardProvider) {
-        flag = false;
-        function onCopied() {
-            flag = 'copied';
-        }
-        function onError(){
-            flag = 'failed'
-        }
-        angularClipboardProvider.configure({
-            onCopiedDefaultCallback: onCopied,
-            onErrorDefaultCallback: onError
-        })
-    }));
 
-    beforeEach(inject(function (_$compile_, _$rootScope_) {
-        $compile = _$compile_;
-        $rootScope = _$rootScope_;
-
-        $rootScope.textToCopy = 'Copy me!';
-
-        $rootScope.success = function() {
-            console.log('scope.success()');
-        }
-
-        $rootScope.fail = function(err) {
-            console.log('scope.fail()');
-        }
-
-    }));
 
     describe('set with default callbacks', function() {
+
+        beforeEach(module('angular-clipboard', function (angularClipboardProvider) {
+            flag = false;
+            function onCopied() {
+                flag = 'copied';
+            }
+            function onError(){
+                flag = 'failed'
+            }
+            angularClipboardProvider.configure({
+                onCopiedDefaultCallback: onCopied,
+                onErrorDefaultCallback: onError
+            })
+        }));
+
+        beforeEach(inject(function (_$compile_, _$rootScope_) {
+            $compile = _$compile_;
+            $rootScope = _$rootScope_;
+
+            $rootScope.textToCopy = 'Copy me!';
+
+            $rootScope.success = function() {
+                console.log('scope.success()');
+            }
+
+            $rootScope.fail = function(err) {
+                console.log('scope.fail()');
+            }
+
+        }));
+
         describe('and no callbacks in attributes', function() {
-
+            it('should call the default on-copied', function () {
+                element = $compile('<button clipboard text="textToCopy">Copy</button>')($rootScope);
+                $rootScope.$digest();
+                spyOn(document, 'execCommand').and.returnValue(true);
+                element.triggerHandler('click');
+                expect(flag).toBe('copied');
+            });
+            it('and call the default on-error', function () {
+                element = $compile('<button clipboard text="textToCopy">Copy</button>')($rootScope);
+                $rootScope.$digest();
+                spyOn(document, 'execCommand').and.returnValue(false);
+                element.triggerHandler('click');
+                expect(flag).toBe('failed');
+            });
         });
+
+        describe('but with callbacks in attributes', function() {
+            
+        });
+
     });
 
-    it('should run the default success callback if no directive attributes supplied', function () {
-        element = $compile('<button clipboard text="textToCopy">Copy</button>')($rootScope);
-        $rootScope.$digest();
-        spyOn(document, 'execCommand').and.returnValue(true);
-        element.triggerHandler('click');
-        expect(flag).toBe('copied');
-    });
 
-    it('but override them if they are missing', function() {
-        element = $compile('<button clipboard text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</button>')($rootScope);
-        $rootScope.$digest();
-        element.triggerHandler('click');
-        expect(flag).toBe(false);
-    })
+
+
 
 });
