@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11586ce7-e67c-4ea2-bc97-e4805d7b6834" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/angular-clipboard.spec.js" afterPath="$PROJECT_DIR$/test/angular-clipboard.spec.js" />
     </list>
     <ignored path="angular-clipboard.iws" />
@@ -38,11 +39,12 @@
       <file leaf-file-name="angular-clipboard.spec.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/angular-clipboard.spec.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="690">
-              <caret line="120" column="12" selection-start-line="120" selection-start-column="12" selection-end-line="120" selection-end-column="12" />
+            <state relative-caret-position="516">
+              <caret line="136" column="16" selection-start-line="136" selection-start-column="16" selection-end-line="136" selection-end-column="16" />
               <folding>
-                <marker date="1484785813000" expanded="true" signature="2080:2165" ph="{...}" />
-                <marker date="1484785813000" expanded="true" signature="2207:2261" ph="{...}" />
+                <marker date="1484786333000" expanded="true" signature="2005:4801" ph="{...}" />
+                <marker date="1484786333000" expanded="true" signature="2080:2165" ph="{...}" />
+                <marker date="1484786333000" expanded="true" signature="2207:2261" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -169,18 +171,18 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1484780861429</updated>
-      <workItem from="1484780862593" duration="4095000" />
+      <workItem from="1484780862593" duration="4613000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4095000" />
+    <option name="totallyTimeSpent" value="4613000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17638889" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17638889" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -243,11 +245,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/angular-clipboard.spec.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="120" column="12" selection-start-line="120" selection-start-column="12" selection-end-line="120" selection-end-column="12" />
+        <state relative-caret-position="516">
+          <caret line="136" column="16" selection-start-line="136" selection-start-column="16" selection-end-line="136" selection-end-column="16" />
           <folding>
-            <marker date="1484785813000" expanded="true" signature="2080:2165" ph="{...}" />
-            <marker date="1484785813000" expanded="true" signature="2207:2261" ph="{...}" />
+            <marker date="1484786333000" expanded="true" signature="2005:4801" ph="{...}" />
+            <marker date="1484786333000" expanded="true" signature="2080:2165" ph="{...}" />
+            <marker date="1484786333000" expanded="true" signature="2207:2261" ph="{...}" />
           </folding>
         </state>
       </provider>

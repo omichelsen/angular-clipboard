@@ -91,26 +91,29 @@ describe('with provider', function() {
             $rootScope.textToCopy = 'Copy me!';
 
             $rootScope.success = function() {
-                console.log('scope.success()');
+                flag = 'override copied';
             }
 
             $rootScope.fail = function(err) {
-                console.log('scope.fail()');
+                flag = 'override fail';
             }
 
         }));
 
         describe('and no callbacks in attributes', function() {
-            it('should call the default on-copied', function () {
+
+            beforeEach(function() {
                 element = $compile('<button clipboard text="textToCopy">Copy</button>')($rootScope);
                 $rootScope.$digest();
+            });
+
+            it('should call the default on-copied', function () {
                 spyOn(document, 'execCommand').and.returnValue(true);
                 element.triggerHandler('click');
                 expect(flag).toBe('copied');
             });
-            it('and call the default on-error', function () {
-                element = $compile('<button clipboard text="textToCopy">Copy</button>')($rootScope);
-                $rootScope.$digest();
+
+            it('should call the default on-error', function () {
                 spyOn(document, 'execCommand').and.returnValue(false);
                 element.triggerHandler('click');
                 expect(flag).toBe('failed');
@@ -118,7 +121,24 @@ describe('with provider', function() {
         });
 
         describe('but with callbacks in attributes', function() {
-            
+
+            beforeEach(function() {
+                element = $compile('<button clipboard text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</button>')($rootScope);
+                $rootScope.$digest();
+            });
+
+            it('should override the default success callback', function() {
+                spyOn(document, 'execCommand').and.returnValue(true);
+                element.triggerHandler('click');
+                expect(flag).toBe('override copied');
+
+            })
+            it('should override the default error callback', function() {
+                spyOn(document, 'execCommand').and.returnValue(false);
+                element.triggerHandler('click');
+                expect(flag).toBe('override fail');
+
+            })
         });
 
     });
