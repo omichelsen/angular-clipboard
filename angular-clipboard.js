@@ -30,6 +30,8 @@ return angular.module('angular-clipboard', [])
                 node.select();
 
                 if(!$document[0].execCommand('copy')) {
+                    node.focus();
+                    node.setSelectionRange(0, node.textContent.length);
                     throw('failure copy');
                 }
                 selection.removeAllRanges();
