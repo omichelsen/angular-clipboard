@@ -5,13 +5,18 @@ describe('angular-clipboard', function () {
 
     beforeEach(angular.mock.inject(function ($rootScope, $compile) {
         scope = $rootScope;
-        elm = $compile('<button clipboard supported="supported" text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</button>')(scope);
+        elm = $compile('<button clipboard supported="supported" text="textToCopy" on-copied="success(text)" on-error="fail(err)">Copy</button>')(scope);
 
         scope.supported = undefined;
         scope.textToCopy = 'Copy me!';
         scope.copied = false;
-        scope.success = function () {scope.copied = true;};
-        scope.fail = function (err) {};
+        scope.success = function (text) {
+            //console.log("scope.success called: ", text);
+            scope.copied = true;
+        };
+        scope.fail = function (err) {
+            //console.log(err);
+        };
         scope.$digest();
 
         spyOn(scope, 'success').and.callThrough();
@@ -71,17 +76,23 @@ describe('with provider', function() {
     describe('set with default callbacks', function() {
 
         beforeEach(module('angular-clipboard', function (angularClipboardProvider) {
+
             flag = false;
-            function onCopied() {
-                flag = 'copied';
+
+            function onCopied(text) {
+                flag = text;
+                //console.log("default onCopied called: ", text);
             }
-            function onError(){
-                flag = 'failed'
+
+            function onError(err) {
+                flag = err;
             }
+
             angularClipboardProvider.configure({
                 onCopiedDefaultCallback: onCopied,
                 onErrorDefaultCallback: onError
-            })
+            });
+
         }));
 
         beforeEach(inject(function (_$compile_, _$rootScope_) {
@@ -110,13 +121,13 @@ describe('with provider', function() {
             it('should call the default on-copied', function () {
                 spyOn(document, 'execCommand').and.returnValue(true);
                 element.triggerHandler('click');
-                expect(flag).toBe('copied');
+                expect(flag).toBe($rootScope.textToCopy);
             });
 
             it('should call the default on-error', function () {
                 spyOn(document, 'execCommand').and.returnValue(false);
                 element.triggerHandler('click');
-                expect(flag).toBe('failed');
+                expect(flag).toBe('failure copy');
             });
         });
 
