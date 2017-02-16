@@ -10,7 +10,7 @@
 
         <p>
             <textarea ng-model="textToCopy" rows="5" cols="30"></textarea><br />
-            <button clipboard supported="supported" text="textToCopy" on-copied="success()" on-error="fail(err)">Copy</button>
+            <button clipboard supported="supported" text="textToCopy"  on-error="fail(err)">Copy</button>
         </p>
 
         <p>
@@ -21,6 +21,15 @@
         <script src="../angular-clipboard.js"></script>
         <script>
             var demoApp = angular.module('demoApp', ['angular-clipboard']);
+
+            demoApp.config([ "angularClipboardProvider", function(angularClipboardProvider) {
+                angularClipboardProvider.configure({
+                    onCopiedDefaultCallback: function(copiedText, $injector){
+                        var $log = $injector.get("$log");
+                        $log.info("Text copied, and callback was injected with the $log service");
+                    }
+                })
+            }]);
 
             demoApp.controller('DemoCtrl', ['$scope', function ($scope) {
                 $scope.supported = false;

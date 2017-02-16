@@ -10,6 +10,22 @@
 }(this, function (angular) {
 
 return angular.module('angular-clipboard', [])
+    .provider('angularClipboard', function () {
+        this.options = {
+            onCopiedDefaultCallback: false,
+            onErrorDefaultCallback: false
+        };
+        this.configure = function (options) {
+            angular.extend(this.options, options);
+        };
+        this.$get = function() {
+            return {
+                defaultOnCopied: this.options.onCopiedDefaultCallback,
+                defaultOnError: this.options.onErrorDefaultCallback,
+            };
+        };
+        return this;
+    })
     .factory('clipboard', ['$document', '$window', function ($document, $window) {
         function createNode(text, context) {
             var node = $document[0].createElement('textarea');
@@ -51,27 +67,41 @@ return angular.module('angular-clipboard', [])
             supported: 'queryCommandSupported' in $document[0] && $document[0].queryCommandSupported('copy')
         };
     }])
-    .directive('clipboard', ['clipboard', function (clipboard) {
+    .directive('clipboard', ['clipboard', 'angularClipboard', "$injector", function (clipboard, angularClipboardProvider, $injector) {
         return {
             restrict: 'A',
             scope: {
-                onCopied: '&',
-                onError: '&',
+                onCopied: '&?',
+                onError: '&?',
                 text: '=',
                 supported: '=?'
             },
             link: function (scope, element) {
                 scope.supported = clipboard.supported;
 
+                var onCopiedCallback = false;
+                if (angular.isFunction(scope.onCopied)) {
+                    onCopiedCallback = scope.onCopied;
+                } else if (angular.isFunction(angularClipboardProvider.defaultOnCopied)) {
+                    onCopiedCallback = angularClipboardProvider.defaultOnCopied;
+                }
+
+                var onErrorCallback = false;
+                if (angular.isFunction(scope.onError)) {
+                    onErrorCallback = scope.onError;
+                } else if (angular.isFunction(angularClipboardProvider.defaultOnError)) {
+                    onErrorCallback = angularClipboardProvider.defaultOnError;
+                }
+
                 element.on('click', function (event) {
                     try {
                         clipboard.copyText(scope.text, element[0]);
-                        if (angular.isFunction(scope.onCopied)) {
-                            scope.$evalAsync(scope.onCopied());
+                        if (onCopiedCallback) {
+                            scope.$evalAsync(onCopiedCallback(scope.text, $injector));
                         }
                     } catch (err) {
-                        if (angular.isFunction(scope.onError)) {
-                            scope.$evalAsync(scope.onError({err: err}));
+                        if (onErrorCallback) {
+                            scope.$evalAsync(onErrorCallback(err, $injector));
                         }
                     }
                 });
