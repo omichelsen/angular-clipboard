@@ -67,7 +67,7 @@ return angular.module('angular-clipboard', [])
             supported: 'queryCommandSupported' in $document[0] && $document[0].queryCommandSupported('copy')
         };
     }])
-    .directive('clipboard', ['clipboard', 'angularClipboard', "$injector", function (clipboard, angularClipboardProvider, $injector) {
+    .directive('clipboard', ['clipboard', 'angularClipboard', function (clipboard, angularClipboardProvider) {
         return {
             restrict: 'A',
             scope: {
@@ -76,32 +76,38 @@ return angular.module('angular-clipboard', [])
                 text: '=',
                 supported: '=?'
             },
-            link: function (scope, element) {
+            link: function (scope, element, attrs) {
                 scope.supported = clipboard.supported;
 
                 var onCopiedCallback = false;
                 if (angular.isFunction(scope.onCopied)) {
                     onCopiedCallback = scope.onCopied;
                 } else if (angular.isFunction(angularClipboardProvider.defaultOnCopied)) {
-                    onCopiedCallback = angularClipboardProvider.defaultOnCopied;
+                    onCopiedCallback = function(params){
+                        angularClipboardProvider.defaultOnCopied(params.text);
+                    };
                 }
+                scope.onCopiedCallback = onCopiedCallback;
 
                 var onErrorCallback = false;
                 if (angular.isFunction(scope.onError)) {
                     onErrorCallback = scope.onError;
                 } else if (angular.isFunction(angularClipboardProvider.defaultOnError)) {
-                    onErrorCallback = angularClipboardProvider.defaultOnError;
+                    onErrorCallback = function(params){
+                        angularClipboardProvider.defaultOnError(params.err);
+                    };
                 }
+                scope.onErrorCallback = onErrorCallback;
 
                 element.on('click', function (event) {
                     try {
                         clipboard.copyText(scope.text, element[0]);
-                        if (onCopiedCallback) {
-                            scope.$evalAsync(onCopiedCallback(scope.text, $injector));
+                        if (scope.onCopiedCallback) {
+                            scope.onCopiedCallback({text:scope.text});
                         }
                     } catch (err) {
-                        if (onErrorCallback) {
-                            scope.$evalAsync(onErrorCallback(err, $injector));
+                        if (scope.onErrorCallback) {
+                            scope.onErrorCallback({err: err});
                         }
                     }
                 });
