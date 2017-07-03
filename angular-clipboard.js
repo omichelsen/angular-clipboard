@@ -27,7 +27,15 @@ return angular.module('angular-clipboard', [])
 
                 var selection = $document[0].getSelection();
                 selection.removeAllRanges();
-                node.select();
+
+                if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+                    var range = document.createRange();
+                    range.selectNodeContents(node);
+                    selection.addRange(range);
+                    node.setSelectionRange(0, 999999);
+                } else {
+                    node.select();
+                }
 
                 if(!$document[0].execCommand('copy')) {
                     throw('failure copy');
