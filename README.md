@@ -5,7 +5,7 @@
 
 Copy text to clipboard by clicking a button, without using Flash. This is using the new [Selection API](https://developer.mozilla.org/en-US/docs/Web/API/Selection) and [Clipboard API](https://developer.mozilla.org/en-US/docs/Web/API/ClipboardEvent) available in the latest browsers.
 
-Browser support: Chrome 43+, Firefox 41+, Opera 29+ and IE10+.
+Browser support: Chrome 43+, Firefox 41+, Opera 29+, IE10+, Safari 10+ and Mobile Safari 10+.
 
 See the [demo](https://rawgit.com/omichelsen/angular-clipboard/master/demo/index.html).
 

@@ -21,12 +21,24 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.js"></script>
         <script src="../angular-clipboard.js"></script>
         <script>
+            function getBrowser() {
+                var aKeys = ['MSIE', 'Firefox', 'Safari', 'Chrome', 'Opera'],
+                    sUsrAg = navigator.userAgent, nIdx = aKeys.length - 1;
+
+                for (nIdx; nIdx > -1 && sUsrAg.indexOf(aKeys[nIdx]) === -1; nIdx--);
+
+                return aKeys[nIdx];
+            }
+        </script>
+        <script>
             var demoApp = angular.module('demoApp', ['angular-clipboard']);
 
             demoApp.controller('DemoCtrl', ['$scope', function ($scope) {
+                var browser = getBrowser();
+
                 $scope.supported = false;
 
-                $scope.textToCopy = "I can copy by clicking!\nAnd also new lines!";
+                $scope.textToCopy = 'I can copy by clicking in ' + browser + '!\nAnd also new lines!';
 
                 $scope.success = function () {
                     console.log('Copied!');
