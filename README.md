@@ -7,7 +7,7 @@ Copy text to clipboard by clicking a button, without using Flash. This is using 
 
 Browser support: Chrome 43+, Firefox 41+, Opera 29+ and IE10+.
 
-See the [demo](https://rawgit.com/omichelsen/angular-clipboard/master/demo/demo.html).
+See the [demo](https://rawgit.com/omichelsen/angular-clipboard/master/demo/index.html).
 
 ## Install
 
