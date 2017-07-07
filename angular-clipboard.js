@@ -27,9 +27,13 @@ return angular.module('angular-clipboard', [])
 
                 var selection = $document[0].getSelection();
                 selection.removeAllRanges();
+
                 var range = document.createRange();
                 range.selectNodeContents(node);
                 selection.addRange(range);
+                // This makes it work in all desktop browsers (Chrome)
+                node.select();
+                // This makes it work on Mobile Safari
                 node.setSelectionRange(0, 999999);
 
                 if(!$document[0].execCommand('copy')) {
