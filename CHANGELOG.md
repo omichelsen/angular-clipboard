@@ -1,3 +1,6 @@
+## [1.6.0] - 2017-07-07
+- Add support for Safari 10+ and Mobile Safari 10+.
+
 ## [1.5.0] - 2016-08-23
 - Prevent scroll to the top on copy in IE.
 - Use injected document for supported check.
