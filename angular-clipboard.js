@@ -14,9 +14,13 @@ return angular.module('angular-clipboard', [])
         function createNode(text, context) {
             var node = $document[0].createElement('textarea');
             node.style.position = 'absolute';
-            node.textContent = text;
+            node.style.fontSize = '12pt';
+            node.style.border = '0';
+            node.style.padding = '0';
+            node.style.margin = '0';
             node.style.left = '-10000px';
             node.style.top = ($window.pageYOffset || $document[0].documentElement.scrollTop) + 'px';
+            node.textContent = text;
             return node;
         }
 
