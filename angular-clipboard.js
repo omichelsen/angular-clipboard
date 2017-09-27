@@ -40,10 +40,13 @@ return angular.module('angular-clipboard', [])
                 // This makes it work on Mobile Safari
                 node.setSelectionRange(0, 999999);
 
-                if(!$document[0].execCommand('copy')) {
-                    throw('failure copy');
+                try {
+                    if(!$document[0].execCommand('copy')) {
+                        throw('failure copy');
+                    }
+                } finally {
+                    selection.removeAllRanges();
                 }
-                selection.removeAllRanges();
             } finally {
                 // Reset inline style
                 $document[0].body.style.webkitUserSelect = '';
