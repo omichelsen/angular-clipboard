@@ -1,5 +1,7 @@
 # angular-clipboard
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/omichelsen/angular-clipboard.svg)](https://greenkeeper.io/)
+
 [![Build Status][travis-image]][travis-url]
 [![Test Coverage][coveralls-image]][coveralls-url]
 
