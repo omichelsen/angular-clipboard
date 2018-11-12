@@ -52,7 +52,10 @@ return angular.module('angular-clipboard', [])
                 node.setSelectionRange(0, 999999);
 
                 try {
-                    if(!$document[0].execCommand('copy')) {
+                    $document[0].addEventListener("copy", listener);
+                    var res = $document[0].execCommand('copy');
+                    $document[0].removeEventListener("copy", listener);
+                    if(!res) {
                         throw('failure copy');
                     }
                 } finally {
