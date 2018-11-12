@@ -24,7 +24,18 @@ return angular.module('angular-clipboard', [])
             return node;
         }
 
-        function copyNode(node) {
+        function copyNode(node, str) {
+
+            function listener(e) {
+                try {
+                    e.clipboardData.setData("text/html", str);
+                    e.clipboardData.setData("text/plain", str);
+                    e.preventDefault();
+                } catch {
+                    // can't use clipboardData, doing it using default browser way
+                }
+            }
+
             try {
                 // Set inline style to override css styles
                 $document[0].body.style.webkitUserSelect = 'initial';
@@ -59,7 +70,7 @@ return angular.module('angular-clipboard', [])
             
             var node = createNode(text, context);
             $document[0].body.appendChild(node);
-            copyNode(node);
+            copyNode(node, text);
 
             $window.scrollTo(left, top);
             $document[0].body.removeChild(node);
