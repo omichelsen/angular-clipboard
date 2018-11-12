@@ -31,7 +31,7 @@ return angular.module('angular-clipboard', [])
                     e.clipboardData.setData("text/html", str);
                     e.clipboardData.setData("text/plain", str);
                     e.preventDefault();
-                } catch {
+                } catch (err) {
                     // can't use clipboardData, doing it using default browser way
                 }
             }
