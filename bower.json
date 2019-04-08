@@ -1,6 +1,6 @@
 {
     "name": "angular-clipboard",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "main": "angular-clipboard.js",
     "description": "Copy to clipboard with AngularJS directive, without using Flash.",
     "dependencies": {
