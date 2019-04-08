@@ -1,9 +1,10 @@
 # angular-clipboard
 
-[![Build Status][travis-image]][travis-url]
-[![Test Coverage][coveralls-image]][coveralls-url]
+[![Build Status](https://img.shields.io/travis/omichelsen/angular-clipboard/master.svg)](https://travis-ci.org/omichelsen/angular-clipboard)
+[![Test Coverage](https://img.shields.io/coveralls/omichelsen/angular-clipboard/master.svg)](https://coveralls.io/r/omichelsen/angular-clipboard?branch=master)
+[![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/angular-clipboard.svg)](https://bundlephobia.com/result?p=angular-clipboard)
 
-Copy text to clipboard by clicking a button, without using Flash. This is using the new [Selection API](https://developer.mozilla.org/en-US/docs/Web/API/Selection) and [Clipboard API](https://developer.mozilla.org/en-US/docs/Web/API/ClipboardEvent) available in the latest browsers.
+Copy text to clipboard by clicking a button without using Flash. This is using the [Selection API](https://developer.mozilla.org/en-US/docs/Web/API/Selection) and [Clipboard API](https://developer.mozilla.org/en-US/docs/Web/API/ClipboardEvent) available in newer browsers.
 
 Browser support: Chrome 43+, Firefox 41+, Opera 29+, IE10+, Safari 10+ and Mobile Safari 10+.
 
@@ -11,13 +12,8 @@ See the [demo](https://rawgit.com/omichelsen/angular-clipboard/master/demo/index
 
 ## Install
 
-Install using `npm` or `bower`:
-
 ```bash
 $ npm install angular-clipboard --save
-```
-```bash
-$ bower install angular-clipboard --save
 ```
 
 angular-clipboard has no other dependencies than [Angular](https://angularjs.org/)
@@ -81,8 +77,3 @@ import clipboardModule from 'angular-clipboard';
 
 angular.module('mymodule', [clipboardModule.name]);
 ```
-
-[travis-image]: https://img.shields.io/travis/omichelsen/angular-clipboard/master.svg
-[travis-url]: https://travis-ci.org/omichelsen/angular-clipboard
-[coveralls-image]: https://img.shields.io/coveralls/omichelsen/angular-clipboard/master.svg
-[coveralls-url]: https://coveralls.io/r/omichelsen/angular-clipboard?branch=master
