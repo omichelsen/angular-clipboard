@@ -57,12 +57,13 @@ return angular.module('angular-clipboard', [])
             var left = $window.pageXOffset || $document[0].documentElement.scrollLeft;
             var top = $window.pageYOffset || $document[0].documentElement.scrollTop;
             
+            var container = (context && context.container) || $document[0].body;
             var node = createNode(text, context);
-            $document[0].body.appendChild(node);
+            container.appendChild(node);
             copyNode(node);
 
             $window.scrollTo(left, top);
-            $document[0].body.removeChild(node);
+            container.removeChild(node);
         }
 
         return {
